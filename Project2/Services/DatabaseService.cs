@@ -46,6 +46,25 @@ namespace Project2.Services
 
         }
 
+
+        public string DeleteUser(string username)
+        {
+            var collection = _db.GetCollection<User>("User");
+            try
+            {
+                var filter = Builders<User>.Filter.Eq("Username", username);
+
+                collection.DeleteOne(filter);
+                return "Deleted!";
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+
+            
+        }
+
         public NewUser Update(string username, NewUser newUser)
         {
             var collection = _db.GetCollection<User>("User");

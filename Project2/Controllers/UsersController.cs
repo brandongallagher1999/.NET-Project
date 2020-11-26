@@ -35,7 +35,8 @@ namespace WebApi.Controllers
 
         //POST: /users/create
         [Authorize(Roles = Role.Admin)]
-        [HttpPost("create")]
+        [Route("create")]
+        [HttpPost]
         public IActionResult Create([FromBody] User user)
         {
             var response = _userService.Create(user);
@@ -56,11 +57,28 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
+        //DELETE : /users/delete/{username}
+        // Deletes a user.
+        [Authorize(Roles = Role.Admin)]
+        [Route("delete/{username}")]
+        [HttpDelete]
+        public IActionResult Delete(string username)
+        {
+            var response = _userService.DeleteUser(username);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+            return Ok(response);
+        }
+
 
         //PUT /users/update/{username}
         //JsonBody: NewUser
         [Authorize(Roles = Role.Admin)]
-        [HttpPut("/update/{username}")]
+        [Route("update/{username}")]
+        [HttpPut]
         public IActionResult Update(string username, [FromBody] NewUser newUser)
         {
             var response = _userService.Update(username, newUser);
@@ -72,7 +90,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        //GET: /users/{id}      {id} is int
+        //GET: /users/{username}      {username} is a string
         [HttpGet("{username}")]
         public IActionResult GetById(string username)
         {

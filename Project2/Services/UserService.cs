@@ -23,16 +23,11 @@ namespace Project2.Services
         User Create(User user);
 
         NewUser Update(string username, NewUser user);
+        string DeleteUser(string username);
     }
 
     public class UserService : IUserService
     {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, FirstName = "Admin", LastName = "User", Username = "admin", Password = "admin", Role = Role.Admin },
-            new User { Id = 2, FirstName = "Normal", LastName = "User", Username = "user", Password = "user", Role = Role.User }
-        };
 
         private readonly AppSettings _appSettings;
         private DatabaseService db;
@@ -45,7 +40,8 @@ namespace Project2.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = db.GetAll().SingleOrDefault(x => x.Username == username && x.Password == password);
+            
 
             // return null if user not found
             if (user == null)
@@ -92,6 +88,11 @@ namespace Project2.Services
                 x.Password = null;
                 return x;
             });
+        }
+
+        public string DeleteUser(string username)
+        {
+            return db.DeleteUser(username);
         }
 
         public User GetById(string username)
