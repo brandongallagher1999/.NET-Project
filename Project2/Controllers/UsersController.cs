@@ -56,11 +56,27 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
-        //GET: /users/{id}      {id} is int
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+
+        //PUT /users/update/{username}
+        //JsonBody: NewUser
+        [Authorize(Roles = Role.Admin)]
+        [HttpPut("/update/{username}")]
+        public IActionResult Update(string username, [FromBody] NewUser newUser)
         {
-            var user = _userService.GetById(id);
+            var response = _userService.Update(username, newUser);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+            return Ok(response);
+        }
+
+        //GET: /users/{id}      {id} is int
+        [HttpGet("{username}")]
+        public IActionResult GetById(string username)
+        {
+            var user = _userService.GetById(username);
 
 
             if (user == null)
@@ -68,8 +84,8 @@ namespace WebApi.Controllers
                 return NotFound(); //if they don't exist
             }
 
-            var currentUserId = int.Parse(User.Identity.Name);
-            if (id != currentUserId && !User.IsInRole(Role.Admin))
+            //var currentUserId = int.Parse(User.Identity.Name);
+            if (!User.IsInRole(Role.Admin))
             {
                 return Forbid();
             }

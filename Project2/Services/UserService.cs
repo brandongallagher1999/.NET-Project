@@ -19,8 +19,10 @@ namespace Project2.Services
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
-        User GetById(int id);
+        User GetById(string username);
         User Create(User user);
+
+        NewUser Update(string username, NewUser user);
     }
 
     public class UserService : IUserService
@@ -71,10 +73,15 @@ namespace Project2.Services
             return user;
         }
 
+        public NewUser Update(string username, NewUser user)
+        {
+            return db.Update(username, user);
+        }
 
         public User Create(User user)
         {
             var response = db.CreateUser(user);
+            response.Password = null; // dont want to see that cheeky password lol
             return response;
         }
 
@@ -87,9 +94,9 @@ namespace Project2.Services
             });
         }
 
-        public User GetById(int id)
+        public User GetById(string username)
         {
-            var user = db.GetUserById(id); //get user from db
+            var user = db.GetUserById(username); //get user from db
 
             // return user without password
             if (user != null)

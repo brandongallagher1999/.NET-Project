@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using Project2.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Project2.Services
 {
@@ -46,13 +46,34 @@ namespace Project2.Services
 
         }
 
-
-        public User GetUserById(int id)
+        public NewUser Update(string username, NewUser newUser)
         {
             var collection = _db.GetCollection<User>("User");
             try
             {
-                var filter = Builders<User>.Filter.Eq("id", id);
+                var filter = Builders<User>.Filter.Eq("Username", username); //find document with existing username
+                var update = Builders<User>.Update.Set("FirstName", newUser.FirstName)
+                    .Set("LastName", newUser.LastName)
+                    .Set("Password", newUser.Password); //change firstname, lastname and password as such.
+                collection.UpdateOne(filter, update);
+                return newUser;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+            
+
+
+        }
+
+
+        public User GetUserById(string username)
+        {
+            var collection = _db.GetCollection<User>("User");
+            try
+            {
+                var filter = Builders<User>.Filter.Eq("Username", username);
 
                 User doc = collection.Find(filter).First();
 

@@ -17,7 +17,7 @@ namespace Project2.Entities
         
         [BsonElement("LastName")]
         public string LastName { get; set; }
-       
+  
         [BsonElement("Username")]
         public string Username { get; set; }
         
