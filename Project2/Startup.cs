@@ -76,10 +76,7 @@ namespace Project2
 
             app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            
 
             app.UseAuthorization();
 
@@ -87,6 +84,10 @@ namespace Project2
             {
                 endpoints.MapControllers();
             });
+
+            
+
+            app.UseCookiePolicy();
 
             app.UseCors(x => x
                 .AllowAnyOrigin()

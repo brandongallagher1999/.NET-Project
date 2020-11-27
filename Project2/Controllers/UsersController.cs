@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Project2.Entities;
-using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebApi.Controllers
 {
@@ -24,12 +24,18 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] User userParam)
         {
-            Console.WriteLine("okayyy");
+            
             var user = _userService.Authenticate(userParam.Username, userParam.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
+
+            string key = "token";
+            string value = user.Token; // their JWT
+            HttpContext.Response.Cookies.Append(key, value);
+
+   
             return Ok(user);
         }
 
