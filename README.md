@@ -12,7 +12,7 @@ https://github.com/brandongallagher1999/.NET-Project
 ## Description
 - Front-End is built in React
 - Back-End is built in .NET Core
-- Personal Portfolio Assignment
+- ToDoList project where you can schedule things for the day.
 
 ## React
 - https://reactjs.org/

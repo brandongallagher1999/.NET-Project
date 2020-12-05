@@ -52,6 +52,13 @@ namespace Project2
                 };
             });
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             // configure DI for application services
             services.AddScoped<Services.IUserService, UserService>();
         }
@@ -77,14 +84,9 @@ namespace Project2
                 endpoints.MapControllers();
             });
 
-            
-
             //app.UseCookiePolicy();
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors("MyPolicy");
         }
     }
 }

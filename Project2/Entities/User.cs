@@ -9,7 +9,9 @@ namespace Project2.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
-        [BsonElement("id")]
+
+
+        [BsonElement("Id")]
         public int Id { get; set; }
         
         [BsonElement("FirstName")]

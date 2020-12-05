@@ -11,11 +11,24 @@ const ToDoList = () =>
 
     //READ
     useEffect(() => {
-        const getItems = async () => {
-            await axios.get("http://localhost:3001/api/items/all")
-            .then(i => setItems(i.data));
-        }
-        getItems();
+
+
+        var config = {
+            method: 'get',
+            url: 'https://localhost:5001/api/items/all',
+            headers: { }
+          };
+          
+          axios(config)
+          .then(function (response) {
+            setItems(response);
+          });
+
+        // const getItems = async () => {
+        //     await axios.get("http://localhost:3001/api/items/all")
+        //     .then(i => setItems(i.data));
+        // }
+        // getItems();
     }, []);
 
 
