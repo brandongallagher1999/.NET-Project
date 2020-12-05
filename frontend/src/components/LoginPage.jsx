@@ -1,5 +1,3 @@
-import Axios from "axios";
-import { useState, useEffect} from "react";
 import {useForm} from "react-hook-form";
 const axios = require("axios");
 
@@ -7,16 +5,13 @@ const axios = require("axios");
 const LoginPage = () =>
 {
 
-    // const [username, setUsername] = useState("");
-    // const [password, setPassword] = useState("");
-
     const { register, handleSubmit} = useForm();
 
     const onSubmit = async (data) =>
     {
         await axios.post(
             "https://localhost:5001/users/authenticate",
-            data, {headers: { "Access-Control-Allow-Origin" : true }})
+            data,)
         .then(() => window.location.href = "http://localhost:3000/");
     }
 

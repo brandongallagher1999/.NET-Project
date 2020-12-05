@@ -1,5 +1,13 @@
 
 
+.large_container
+{
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+
+}
 
 .box
 {
@@ -82,20 +90,6 @@ height: 1.5em;
 width: 100%;
 text-align: center;
 text-shadow: 1px 1px 4px rgba(10,10,10,1);
-}
-input {
-background: rgba(228,232,243, 0.8) url("./images/sprite.png") no-repeat;
-background-size: 20px 80px;
-background-position: 0.5em 0.6em;
-border: none;
-color: rgba(80,80,80,1);
-padding: 0 0 0 4em;
-margin: 0 0 1em 0;
-width: 20em;
-height: 2.8em;
-outline: none;
--webkit-transition: background-color 0.4s;
-transition: background-color 0.4s;
 }
 input:hover {
 background-color: rgba(255,255,255, 0.8);

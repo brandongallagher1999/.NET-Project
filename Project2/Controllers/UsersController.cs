@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Project2.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Cors;
+using System;
 
 namespace WebApi.Controllers
 {
@@ -24,7 +24,8 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] User userParam)
         {
-            
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:3000/");
+            Console.WriteLine("authentication");
             var user = _userService.Authenticate(userParam.Username, userParam.Password);
 
             if (user == null)
@@ -35,7 +36,8 @@ namespace WebApi.Controllers
             string value = user.Token; // their JWT
             HttpContext.Response.Cookies.Append(key, value);
 
-   
+
+
             return Ok(user);
         }
 
@@ -63,7 +65,7 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
-        //DELETE : /users/delete/{username}
+        //DELETE: /users/delete/{username}
         // Deletes a user.
         [Authorize(Roles = Role.Admin)]
         [Route("delete/{username}")]

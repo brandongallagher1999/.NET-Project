@@ -1,27 +1,19 @@
 import { useState, useEffect} from "react";
 import "../App.css";
 
-const ToDoItem = () =>
+const ToDoItem = (props) =>
 {
-    
-    const [desc, setDesc] = useState("some desc");
-    const [user, setUser] = useState("brandon");
-    const [date, setDate] = useState("today date");
-
-    useEffect(()=> {
-
-    });
 
     return(
         <div className="box">
             <div className="inner-box">
-                <p>Name: {user}</p>
+                <p>{props.name}</p>
             </div>
             <div className="inner-box">
-                <p> {desc} </p>
+                <p> {props.description} </p>
             </div>
             <div className="inner-box">
-                <p> {date}</p>
+                <p> {props.date}</p>
             </div>
 
         </div>
